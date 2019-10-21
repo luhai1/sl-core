@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<configuration  scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>SLCore</contextName>
+    <property name="logback.logdir" value="D:\\data\\logs\\core"/>
+    <!--springboot配置文件中获取日志级别-->
+    <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
+
+
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="org.springboot.sample" level="TRACE" />
+
+    <!-- 负责写日志的组件，它有两个必要属性name和class。name指定appender名称，class指定appender的全限定名-->
+    <!-- ConsoleAppender 把日志输出到控制台 -->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 展示的格式 -->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+
+    <!-- info 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件  此处每天输出日志 -->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>  <!-- 此处如果匹配erroe 就禁止掉，没有就启用该规则 -->
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>　
+
+        <!--　encoder：对日志进行格式化。-->
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+        <!--滚动策略 此处按照时间滚动-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间-->
+            <fileNamePattern>${logback.logdir}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--只保留最近90天的日志-->
+            <maxHistory>90</maxHistory>
+            <!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志-->
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间-->
+            <FileNamePattern>${logback.logdir}/error.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!--只保留最近90天的日志-->
+            <maxHistory>90</maxHistory>
+            <!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志-->
+            <totalSizeCap>2GB</totalSizeCap>
+
+        </rollingPolicy>
+    </appender>
+
+    <!-- 测试环境+开发环境. 多个使用逗号隔开. -->
+    <springProfile name="test,dev">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="consoleLog"/>
+            <appender-ref ref="fileInfoLog"/>
+            <appender-ref ref="fileErrorLog"/>
+        </root>
+    </springProfile>
+
+    <!-- 生产环境. -->
+    <springProfile name="prod">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="consoleLog"/>
+            <appender-ref ref="fileInfoLog"/>
+            <appender-ref ref="fileErrorLog"/>
+        </root>
+    </springProfile>
+
+
+</configuration>
