@@ -2,7 +2,7 @@
 
 <configuration  scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>SLCore</contextName>
-    <property name="logback.logdir" value="D:\\data\\logs\\core"/>
+    <property name="logback.logdir" value="E:\\data\\logs\\core"/>
     <!--springboot配置文件中获取日志级别-->
     <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
 
@@ -73,7 +73,7 @@
     </appender>
 
     <!-- 测试环境+开发环境. 多个使用逗号隔开. -->
-    <springProfile name="test,dev">
+    <springProfile name="test,qa">
         <root level="${LOG_LEVEL}">
             <appender-ref ref="consoleLog"/>
             <appender-ref ref="fileInfoLog"/>

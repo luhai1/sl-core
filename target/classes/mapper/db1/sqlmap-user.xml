@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sl.dao.db1.UserDao" >
+
+    <select id="getEmailByUserName" parameterType="java.lang.String" resultType="java.lang.String">
+       select
+       sl_sys_user.email
+       from sl_sys_user
+       where    sl_sys_user.status = 1
+       and sl_sys_user.user_name = #{userName}
+
+    </select>
+</mapper>
