@@ -1,4 +1,4 @@
-package com.sl.common.config;
+package com.sl.common.config.dataSource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
