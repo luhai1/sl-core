@@ -1,6 +1,6 @@
 package com.sl.service.impl;
 
-import com.sl.dao.db1.UserDao;
+import com.sl.dao.UserDao;
 import com.sl.service.UserService;
 import org.springframework.stereotype.Service;
 

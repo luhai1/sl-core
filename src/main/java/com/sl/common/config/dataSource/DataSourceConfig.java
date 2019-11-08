@@ -16,11 +16,11 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.sl.dao.db1", sqlSessionTemplateRef = "db1SqlSessionTemplate")
-public class DataSource1Config {
+@MapperScan(basePackages = "com.sl.dao.db", sqlSessionTemplateRef = "db1SqlSessionTemplate")
+public class DataSourceConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.db1")
+    @ConfigurationProperties(prefix = "spring.datasource.db")
     @Primary
     public DataSource db1DataSource() {
          return new DruidDataSource();
@@ -31,7 +31,7 @@ public class DataSource1Config {
     public SqlSessionFactory db1SqlSessionFactory(@Qualifier("db1DataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/db1/*.xml"));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml"));
         return bean.getObject();
     }
 

@@ -1,6 +1,6 @@
 package com.sl.service.impl;
 
-import com.sl.dao.db2.DictionaryDao;
+import com.sl.dao.DictionaryDao;
 import com.sl.service.DictionaryService;
 import org.springframework.stereotype.Service;
 

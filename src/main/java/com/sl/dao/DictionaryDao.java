@@ -1,4 +1,4 @@
-package com.sl.dao.db2;
+package com.sl.dao;
 
 public interface DictionaryDao {
      String getNameByCode(String dictCode);
