@@ -1,5 +1,8 @@
 package com.sl.common.config.shiro;
 
+import com.sl.common.util.JedisUtil;
+import com.sl.common.util.SerializeUtil;
+import com.sl.common.util.TokenTools;
 import com.sl.dao.UserDao;
 import com.sl.entity.LoginUser;
 import com.sl.entity.SysResources;
@@ -11,15 +14,19 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import redis.clients.jedis.Jedis;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Slf4j
 public class CustomRealm extends AuthorizingRealm {
+    private static String REQUEST_TIMESTAMP_PARAM="timeStamp";
     @Autowired
     private UserDao userDao;
-    @Autowired
-    private Jedis jedis;
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
@@ -33,7 +40,10 @@ public class CustomRealm extends AuthorizingRealm {
                 authorizationInfo.addStringPermission(sysResources.getResourceCode());
             }
         }
-      //  jedis.set(, SerializeUtil.serizlize(object));
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+        String token = TokenTools.makeToken(Long.valueOf(request.getParameter(REQUEST_TIMESTAMP_PARAM)) ,username);
+        JedisUtil.set(token, SerializeUtil.serialize(user).toString());
         return authorizationInfo;
     }
 

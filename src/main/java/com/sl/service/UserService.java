@@ -1,5 +1,7 @@
 package com.sl.service;
 
+import com.sl.entity.LoginUser;
+
 public interface UserService {
-     String getEmailByUserName(String userName);
+     LoginUser getUserByUserName(String userName);
 }

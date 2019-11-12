@@ -1,6 +1,7 @@
 package com.sl.service.impl;
 
 import com.sl.dao.UserDao;
+import com.sl.entity.LoginUser;
 import com.sl.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public class UserServiceImpl implements UserService {
     @Resource
     UserDao userDao;
     @Override
-    public String getEmailByUserName(String userName) {
-        return userDao.getEmailByUserName(userName);
+    public LoginUser getUserByUserName(String userName) {
+        return userDao.getUserByUserName(userName);
     }
 }
