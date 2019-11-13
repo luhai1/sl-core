@@ -15,6 +15,7 @@ CREATE TABLE `sl_sys_dict` (
 CREATE TABLE `sl_sys_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_name` varchar(32) NOT NULL COMMENT '用户名',
+  `password` varchar(16) NOT NULL  COMMENT '密码',
   `real_name` varchar(32) NOT NULL COMMENT '真实姓名',
   `id_card` varchar(32) NOT NULL COMMENT '省份证',
   `sex` smallint(2) NOT NULL DEFAULT '1' COMMENT '性别：1:男,0女',

@@ -74,6 +74,17 @@ public class JedisUtil {
         if(StringUtils.isEmpty(key)){
             return;
         }
+        jedis.del(key);
     }
 
+    public static void deleteKeys(String[] keys){
+        if(keys.length<1){
+            return;
+        }
+        jedis.del(keys);
+    }
+
+    public static String clear(){
+        return jedis.flushAll();
+    }
 }

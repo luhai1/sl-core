@@ -6,6 +6,7 @@
     <artifactId>core</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>SL API CORE</name>
+    <packaging>jar</packaging>
     <!-- 定义公共资源版本 -->
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -35,6 +36,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
 
         <!-- 热部署 -->
         <dependency>
@@ -73,6 +76,7 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.9</version>
         </dependency>
+
         <!--spring缓存使用redis进行缓存-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

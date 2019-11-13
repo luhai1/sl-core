@@ -1,14 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sl.dao.UserDao" >
+    <resultMap id="userMap" type="com.sl.entity.LoginUser">
+        <id column="id" property="id"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_id" property="createId"/>
+        <result column="update_id" property="updateId"/>
+        <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="real_name" property="realName"/>
+        <result column="id_card" property="idCard"/>
+        <result column="sex" property="sex"/>
+        <result column="mobile_phone" property="mobilePhone"/>
+        <result column="email" property="email"/>
+        <collection property="roleList" ofType="com.sl.entity.SysRole" >
+            <id column="roleId" property="id"/>
+            <result column="role_code" property="roleCode"/>
+            <result column="role_name" property="roleName"/>
+            <collection property="resourcesList" ofType="com.sl.entity.SysResources">
+                <id column="resourceId" property="id"/>
+                <result column="resource_code" property="resourceCode"/>
+                <result column="display" property="display"/>
+                <result column="description" property="description"/>
+                <result column="parent_code" property="parentCode"/>
+                <result column="resource_type" property="resourceType"/>
+                <result column="url" property="url"/>
+                <result column="icon" property="icon"/>
+                <result column="sort_by" property="sortBy"/>
+            </collection>
+        </collection>
 
+    </resultMap>
 
-    <select id="getEmailByUserName" parameterType="java.lang.String" resultMap="">
+    <select id="getUserByUserName" parameterType="java.lang.String" resultMap="userMap">
+        select
+           u.id,
+           u.user_name,
+           u.real_name,
+           u.password,
+           u.id_card,
+           u.sex,
+           u.mobile_phone
+           from sl_sys_user u
+           where   u.status = 1
+           and u.user_name = #{userName}
+    </select>
+
+    <select id="getRoleResourcesByUserName" parameterType="java.lang.String" resultMap="userMap">
        select
-       sl_sys_user.email
-       from sl_sys_user
-       where    sl_sys_user.status = 1
-       and sl_sys_user.user_name = #{userName}
+       u.id,
+       u.user_name,
+       u.real_name,
+       u.password,
+       u.id_card,
+       u.sex,
+       u.mobile_phone,
+       r.id roleId,
+       r.role_code,
+       r.role_name,
+       sr.id resourceId,
+       sr.resource_code,
+       sr.display,
+       sr.description,
+       sr.parent_code,
+       sr.resource_type,
+       sr.url,
+       sr.sort_by,
+       sr.icon
+       from sl_sys_user u
+       left join sl_user_role ur on u.id = ur.user_id and ur.status=1
+       left join sl_sys_role r on r.role_code = ur.role_code and r.status=1
+       left join sl_role_resource rr on rr.role_code = r.role_code and rr.status=1
+       left join sl_sys_resources  sr on sr.resource_code = rr.resource_code and sr.status=1
+       where    u.status = 1
+       and u.user_name = #{userName}
 
     </select>
 </mapper>

@@ -19,6 +19,6 @@ public class TestController {
 
     @RequestMapping("getResult")
     public String getResult(){
-      return   userService.getEmailByUserName("lh") + dictionaryService.getNameByCode("lh");
+      return   userService.getUserByUserName("lh") + dictionaryService.getNameByCode("lh");
     }
 }

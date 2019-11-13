@@ -9,7 +9,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("")
+@RequestMapping("/sys")
 @RestController
 public class LoginController {
 
