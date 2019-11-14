@@ -18,7 +18,7 @@ public class TokenTools {
           */
 
     public static String makeToken(Long timeStamp,String key) {
-        String token = (timeStamp + new Random().nextInt(999999999)) + key;
+        String token = timeStamp + key;
 
         try {
 

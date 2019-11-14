@@ -24,6 +24,9 @@ public class LoginController {
         }  catch (Exception e) {
 
         }
-        return JsonUtil.toJson(JedisUtil.get(tokenKey));
+//        System.out.println(tokenKey);
+//        String value = JedisUtil.get(tokenKey);
+//        System.out.println(JsonUtil.toJson(value));
+        return JsonUtil.toJson("");
     }
 }

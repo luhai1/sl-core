@@ -1,17 +1,39 @@
 package com.sl.common.util;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.crazycake.shiro.RedisManager;
+
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.Set;
 
 @Component
 public class JedisUtil {
     private JedisUtil(){}
-    @Autowired
-    private static Jedis jedis;
+
+    @Resource
+    private   RedisManager autoRedisManager;
+
+    private  static RedisManager redisManager;
+    private  static JedisPool jedisPool;
+
+
+
+    @PostConstruct
+    public void init() {
+        JedisPool P=  autoRedisManager.getJedisPool();
+        redisManager = autoRedisManager;
+        jedisPool =  redisManager.getJedisPool();
+    }
+    public static Jedis getJedis(){
+
+        return jedisPool.getResource();
+    }
 
     /**
      * 设置值
@@ -22,7 +44,7 @@ public class JedisUtil {
         if(StringUtils.isEmpty(key)){
             return;
         }
-        jedis.set(key,value);
+        getJedis().set(key,value);
     }
 
     /**
@@ -35,6 +57,7 @@ public class JedisUtil {
         if(StringUtils.isEmpty(key)){
             return;
         }
+        Jedis jedis = getJedis();
         if(null != expire){
             jedis.expire(key,expire);
         }
@@ -50,7 +73,7 @@ public class JedisUtil {
         if(StringUtils.isEmpty(key)){
             return null;
         }
-        return jedis.get(key);
+        return getJedis().get(key);
     }
 
     /**
@@ -60,13 +83,15 @@ public class JedisUtil {
      */
     public static Set<String> getKeys(String pattern){
         if(StringUtils.isEmpty(pattern)){
-            pattern = "**";
+            pattern = "*";
         }
-        return jedis.keys(pattern);
+
+
+        return getJedis().keys(pattern);
     }
 
     public static Set<String> getKeys(){
-        return getKeys("**");
+        return getKeys("*");
     }
 
 
@@ -74,17 +99,19 @@ public class JedisUtil {
         if(StringUtils.isEmpty(key)){
             return;
         }
-        jedis.del(key);
+        getJedis().del(key);
     }
 
     public static void deleteKeys(String[] keys){
         if(keys.length<1){
             return;
         }
-        jedis.del(keys);
+        for (String key : keys){
+            deleteKey(key);
+        }
     }
 
     public static String clear(){
-        return jedis.flushAll();
+        return getJedis().flushAll();
     }
 }
