@@ -14,17 +14,23 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import redis.clients.jedis.Jedis;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 
 @Slf4j
+@Configurable
 public class CustomRealm extends AuthorizingRealm {
+    @Value("${shiro.redis.expire}")
+    private Integer expire;
     private static String REQUEST_TIMESTAMP_PARAM="timeStamp";
-    @Autowired
+    @Resource
     private UserDao userDao;
 
     @Override
@@ -43,7 +49,7 @@ public class CustomRealm extends AuthorizingRealm {
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = servletRequestAttributes.getRequest();
         String token = TokenTools.makeToken(Long.valueOf(request.getParameter(REQUEST_TIMESTAMP_PARAM)) ,username);
-        JedisUtil.set(token, SerializeUtil.serialize(user).toString());
+        JedisUtil.set(token, SerializeUtil.serialize(user).toString(), expire);
         return authorizationInfo;
     }
 

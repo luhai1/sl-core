@@ -9,18 +9,18 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/sys")
+@RequestMapping("/admin")
 @RestController
 public class LoginController {
 
     @RequestMapping("doLogin")
-    public String doLogin(String userName,String password,Long timeStamp){
+    public String doLogin(String username,String password,Long timeStamp){
         Subject subject = SecurityUtils.getSubject();
         String tokenKey = null;
-        UserNamePasswordTimeToken token = new UserNamePasswordTimeToken(userName,password);
+        UserNamePasswordTimeToken token = new UserNamePasswordTimeToken(username,password);
         try {
             subject.login(token);
-            tokenKey = TokenTools.makeToken(timeStamp,userName);
+            tokenKey = TokenTools.makeToken(timeStamp,username);
         }  catch (Exception e) {
 
         }

@@ -1,5 +1,6 @@
 package com.sl.common.config.shiro;
 
+import lombok.Data;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -11,32 +12,36 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Configuration
-@ConfigurationProperties(prefix ="spring.redis")
+@Component
+@Data
 public class ShiroConfig {
-
 
     @Value("${spring.redis.host}")
     private String host;
-
     @Value("${spring.redis.port}")
-    private int port;
+    private Integer port;
+    @Value("${spring.redis.database}")
+    private Integer database;
+
     @Value("${spring.redis.password}")
     private String password;
-    @Value("${spring.redis.expire}")
+    @Value("${shiro.redis.expire}")
     private int expire;
-    @Value("${spring.redis.timeout}")
+    @Value("${shiro.redis.timeout}")
     private int timeout;
 
 
@@ -45,11 +50,11 @@ public class ShiroConfig {
      * 负责org.apache.shiro.util.Initializable类型bean的生命周期的，初始化和销毁。
      * 主要是AuthorizingRealm类的子类，以及EhCacheManager类。
      */
+
     @Bean(name = "lifecycleBeanPostProcessor")
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+    public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
-
     /**
      * HashedCredentialsMatcher，这个类是为了对密码进行编码的，
      * 防止密码在数据库里明码保存，当然在登陆认证的时候，
@@ -76,7 +81,7 @@ public class ShiroConfig {
         formAuthenticationFilter.setUsernameParam("userName");
         filters.put("authc",formAuthenticationFilter);
 
-        shiroFilterFactoryBean.setLoginUrl("/doLogin");
+        shiroFilterFactoryBean.setLoginUrl("/admin/doLogin");
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         filterChainDefinitionMap.put("/pub/**", "anon");
@@ -102,7 +107,6 @@ public class ShiroConfig {
     }
 
     @Bean
-    @DependsOn("lifecycleBeanPostProcessor")
     public CustomRealm customRealm() {
         CustomRealm customRealm = new CustomRealm();
        // customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
@@ -139,8 +143,8 @@ public class ShiroConfig {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(host);
         redisManager.setPort(port);
-        redisManager.setPassword(password);
-        redisManager.setExpire(expire*1000);// 配置缓存过期时间
+        redisManager.setDatabase(database);
+//        redisManager.setPassword(password);
         redisManager.setTimeout(timeout);
         return redisManager;
     }
