@@ -20,7 +20,6 @@ public class JedisUtil {
     private   RedisManager autoRedisManager;
 
     private  static RedisManager redisManager;
-    private  static JedisPool jedisPool;
 
 
 
@@ -28,11 +27,6 @@ public class JedisUtil {
     public void init() {
         JedisPool P=  autoRedisManager.getJedisPool();
         redisManager = autoRedisManager;
-        jedisPool =  redisManager.getJedisPool();
-    }
-    public static Jedis getJedis(){
-
-        return jedisPool.getResource();
     }
 
     /**
@@ -44,7 +38,7 @@ public class JedisUtil {
         if(StringUtils.isEmpty(key)){
             return;
         }
-        getJedis().set(key,value);
+        set(key,value,Integer.MAX_VALUE);
     }
 
     /**
@@ -57,11 +51,7 @@ public class JedisUtil {
         if(StringUtils.isEmpty(key)){
             return;
         }
-        Jedis jedis = getJedis();
-        if(null != expire){
-            jedis.expire(key,expire);
-        }
-        jedis.set(key,value);
+        redisManager.set(key.getBytes(),value.getBytes(),expire);
     }
 
     /**
@@ -73,7 +63,7 @@ public class JedisUtil {
         if(StringUtils.isEmpty(key)){
             return null;
         }
-        return getJedis().get(key);
+        return new String(redisManager.get(key.getBytes()));
     }
 
     /**
@@ -86,8 +76,7 @@ public class JedisUtil {
             pattern = "*";
         }
 
-
-        return getJedis().keys(pattern);
+        return  redisManager.getJedisPool().getResource().keys(pattern);
     }
 
     public static Set<String> getKeys(){
@@ -99,7 +88,7 @@ public class JedisUtil {
         if(StringUtils.isEmpty(key)){
             return;
         }
-        getJedis().del(key);
+        redisManager.del(key.getBytes());
     }
 
     public static void deleteKeys(String[] keys){
@@ -112,6 +101,6 @@ public class JedisUtil {
     }
 
     public static String clear(){
-        return getJedis().flushAll();
+        return redisManager.getJedisPool().getResource().flushAll();
     }
 }

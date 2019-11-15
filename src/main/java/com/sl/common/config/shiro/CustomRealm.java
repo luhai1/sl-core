@@ -70,7 +70,7 @@ public class CustomRealm extends AuthorizingRealm {
         HttpServletRequest request = servletRequestAttributes.getRequest();
         String token = TokenTools.makeToken(Long.valueOf(request.getParameter(REQUEST_TIMESTAMP_PARAM)) ,userName);
         System.out.println(token);
-     //  JedisUtil.set(token, JsonUtil.toJson(loginUser), expire);
+        JedisUtil.set(token, JsonUtil.toJson(loginUser), expire);
         return new SimpleAuthenticationInfo(userName, loginUser.getPassword(),getName());
     }
 }
