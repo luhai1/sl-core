@@ -39,14 +39,38 @@ INSERT INTO `sl_role_resource` VALUES ('sys_admin', 'user_update', 1);
 -- Table structure for sl_sys_dict
 -- ----------------------------
 DROP TABLE IF EXISTS `sl_sys_dict`;
-CREATE TABLE `sl_sys_dict`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `dict_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `dict_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `status` smallint(2) NOT NULL DEFAULT 1,
+create table sl_sys_dict
+(
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `dict_code`         varchar(32) NOT NULL COMMENT '字典编码',
+  `dict_name`         varchar(64) NOT NULL COMMENT '字典名称',
+  `status` smallint(2) NOT NULL DEFAULT 1 COMMENT '是否有效：1有效，0无效',
+  `sort_by` int(11) NULL DEFAULT NULL COMMENT '排序',
+  `create_time` timestamp(0) NOT NULL COMMENT '创建时间',
+  `update_time` timestamp(0) NOT NULL COMMENT '更新时间',
+  `create_id` int(11) NULL DEFAULT NULL,
+  `update_id` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `unique_code`(`dict_code`) USING BTREE COMMENT '唯一code'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  UNIQUE INDEX `unique_code`(`dict_code`) USING BTREE COMMENT 'code唯一'
+) ENGINE = InnoDB AUTO_INCREMENT = 1;
+
+create table NCMS_SYS_DICT_ITEM
+(
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `item_code`    varchar(32) NOT NULL COMMENT '字典值编码',
+  `parent_item_code`    varchar(32) NOT NULL COMMENT '字典值父级编码',
+  `dict_code`    varchar(50) NOT NULL COMMENT '字典编码',
+  `item_name`   varchar(64) NOT NULL COMMENT '字典值名称',
+  `description`   varchar(128),
+  `status` smallint(2) NOT NULL DEFAULT 1 COMMENT '是否有效：1有效，0无效',
+  `sort_by` int(11) NULL DEFAULT NULL COMMENT '排序',
+  `create_time` timestamp(0) NOT NULL COMMENT '创建时间',
+  `update_time` timestamp(0) NOT NULL COMMENT '更新时间',
+  `create_id` int(11) NULL DEFAULT NULL,
+  `update_id` int(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `unique_code`(`item_code`) USING BTREE COMMENT 'code唯一'
+)ENGINE = InnoDB AUTO_INCREMENT = 1;
 
 -- ----------------------------
 -- Table structure for sl_sys_resources

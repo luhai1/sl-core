@@ -1,5 +1,6 @@
 package com.sl.controller;
 
+import com.sl.common.i18n.LocaleMessageSource;
 import com.sl.service.DictionaryService;
 import com.sl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/pub/test")
 public class TestController {
 
     @Resource
@@ -19,6 +20,7 @@ public class TestController {
 
     @RequestMapping("getResult")
     public String getResult(){
-      return   userService.getUserByUserName("lh") + dictionaryService.getNameByCode("lh");
+        String value = LocaleMessageSource.getMessage("slcore.add.success");
+      return value;
     }
 }
