@@ -1,13 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sl.dao.DictionaryDao" >
+    <resultMap id="dictMap" type="com.sl.entity.DictionaryEntity">
+        <id property="id" column="id"/>
+        <result property="dictCode" column="dict_code"/>
+        <result property="dictName" column="dict_name"/>
+        <result property="sortBy" column="sort_by"/>
+        <collection  ofType="com.sl.entity.DictionaryItem" property="dictionaryItemList"  column="{dictCode=dict_code}" select="getDictItemByDictCode">
+            <id property="id" column="itemId"/>
+            <result property="itemCode" column="item_code"/>
+            <result property="itemName" column="item_name"/>
+            <result property="parentItemCode" column="parent_item_code"/>
+            <result property="description" column="description"/>
+            <result property="sortBy" column="sort_by"/>
+            <result property="lever" column="lever"/>
+            <collection  property="dictionaryItemList" ofType="com.sl.entity.DictionaryItem" column="{itemCode=item_code}" select="getDictItemByParentCode" />
+        </collection>
+    </resultMap>
 
-    <select id="getNameByCode" parameterType="java.lang.String" resultType="java.lang.String">
+    <resultMap id="dictItemMap" type="com.sl.entity.DictionaryItem">
+        <id property="id" column="itemId"/>
+        <result property="itemCode" column="item_code"/>
+        <result property="itemName" column="item_name"/>
+        <result property="parentItemCode" column="parent_item_code"/>
+        <result property="description" column="description"/>
+        <result property="sortBy" column="sort_by"/>
+        <result property="lever" column="lever"/>
+        <collection  property="dictionaryItemList" ofType="com.sl.entity.DictionaryItem" column="{itemCode=item_code}" select="getDictItemByParentCode" />
+    </resultMap>
+
+    <select id="getAllDict"  resultMap="dictMap">
        select
-       sl_sys_dict.dict_name
+       sl_sys_dict.id,
+       sl_sys_dict.dict_code,
+       sl_sys_dict.dict_name,
+       sl_sys_dict.sort_by
        from sl_sys_dict
        where    sl_sys_dict.status = 1
-       and sl_sys_dict.dict_code = #{dictCode}
 
+    </select>
+
+    <select id="getDictItemByDictCode" resultMap="dictItemMap" parameterType="java.util.Map">
+    select
+     sl_sys_dict_item.id,
+     sl_sys_dict_item.item_code,
+     sl_sys_dict_item.item_name,
+     sl_sys_dict_item.parent_item_code,
+     sl_sys_dict_item.description,
+     sl_sys_dict_item.sort_by,
+     sl_sys_dict_item.lever
+    from sl_sys_dict_item
+    where    sl_sys_dict_item.status=1 and sl_sys_dict_item.lever =0
+     and sl_sys_dict_item.dict_code= #{dictCode}
+    </select>
+    
+    <select id="getDictItemByParentCode" resultMap="dictItemMap" parameterType="java.util.Map">
+    select
+     sl_sys_dict_item.id,
+     sl_sys_dict_item.item_code,
+     sl_sys_dict_item.item_name,
+     sl_sys_dict_item.parent_item_code,
+     sl_sys_dict_item.description,
+     sl_sys_dict_item.sort_by,
+     sl_sys_dict_item.lever
+    from sl_sys_dict_item
+    where    sl_sys_dict_item.status = 1
+    and sl_sys_dict_item.parent_item_code= #{itemCode}
     </select>
 </mapper>

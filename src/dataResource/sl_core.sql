@@ -54,7 +54,7 @@ create table sl_sys_dict
   UNIQUE INDEX `unique_code`(`dict_code`) USING BTREE COMMENT 'code唯一'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1;
 
-create table NCMS_SYS_DICT_ITEM
+create table sl_sys_dict_item
 (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `item_code`    varchar(32) NOT NULL COMMENT '字典值编码',
@@ -64,6 +64,7 @@ create table NCMS_SYS_DICT_ITEM
   `description`   varchar(128),
   `status` smallint(2) NOT NULL DEFAULT 1 COMMENT '是否有效：1有效，0无效',
   `sort_by` int(11) NULL DEFAULT NULL COMMENT '排序',
+  `lever` smallint(4) NOT NULL DEFAULT 0 COMMENT '层级',
   `create_time` timestamp(0) NOT NULL COMMENT '创建时间',
   `update_time` timestamp(0) NOT NULL COMMENT '更新时间',
   `create_id` int(11) NULL DEFAULT NULL,

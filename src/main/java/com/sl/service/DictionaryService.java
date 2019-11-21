@@ -1,6 +1,11 @@
 package com.sl.service;
 
+import com.sl.entity.DictionaryEntity;
+
+import java.util.List;
+
 public interface DictionaryService {
 
-    public String getNameByCode(String code);
+
+     List<DictionaryEntity> getAllDict();
 }

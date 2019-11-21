@@ -3,16 +3,16 @@ package com.sl.common.util;
 import org.apache.commons.lang3.StringUtils;
 import org.crazycake.shiro.RedisManager;
 
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.HashSet;
 import java.util.Set;
 
 @Component
+@DependsOn("redisManager")
 public class JedisUtil {
     private JedisUtil(){}
 

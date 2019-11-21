@@ -1,5 +1,9 @@
 package com.sl.dao;
 
+import com.sl.entity.DictionaryEntity;
+
+import java.util.List;
+
 public interface DictionaryDao {
-     String getNameByCode(String dictCode);
+     List<DictionaryEntity> getAllDict();
 }
