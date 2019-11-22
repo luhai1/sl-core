@@ -1,6 +1,8 @@
 package com.sl.controller;
 
+import com.sl.common.config.dict.DictionaryUtil;
 import com.sl.common.i18n.LocaleMessageSource;
+import com.sl.common.util.JsonUtil;
 import com.sl.service.DictionaryService;
 import com.sl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,16 @@ public class TestController {
     @Resource
     DictionaryService dictionaryService;
 
-    @RequestMapping("getResult")
-    public String getResult(){
+    @RequestMapping("getI18n")
+    public String getI18n(){
         String value = LocaleMessageSource.getMessage("slcore.add.success");
-      return value;
+        return value;
+    }
+
+    @RequestMapping("getDict")
+    public String getDict(String itemCode){
+        String value = DictionaryUtil.getDictItemValue(itemCode);
+        String value1 = JsonUtil.toJson(DictionaryUtil.getDictValue(itemCode));
+        return value+value1;
     }
 }

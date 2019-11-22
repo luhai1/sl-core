@@ -13,6 +13,7 @@ public class TestMain {
         byte[] bytes = key.getBytes();
         BASE64Encoder encoder = new BASE64Encoder();
         BASE64Decoder decoder = new BASE64Decoder();
-        System.out.println(new String(bytes));
+        String v = System.lineSeparator();
+        System.out.println(System.lineSeparator());
     }
 }

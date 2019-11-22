@@ -61,6 +61,7 @@ create table sl_sys_dict_item
   `parent_item_code`    varchar(32) NOT NULL COMMENT '字典值父级编码',
   `dict_code`    varchar(50) NOT NULL COMMENT '字典编码',
   `item_name`   varchar(64) NOT NULL COMMENT '字典值名称',
+  `item_value`   varchar(64) NOT NULL COMMENT '字典值',
   `description`   varchar(128),
   `status` smallint(2) NOT NULL DEFAULT 1 COMMENT '是否有效：1有效，0无效',
   `sort_by` int(11) NULL DEFAULT NULL COMMENT '排序',

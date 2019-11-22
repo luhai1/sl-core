@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 
 import java.io.IOException;
@@ -44,6 +45,9 @@ public class JsonUtil {
       * @return java object.
       */
         public static <T> T fromJson(String json, Class<T> clazz) {
+            if(StringUtils.isBlank(json)){
+                return null;
+            }
              try {
                 return mapper.readValue(json, clazz);
             } catch (IOException e) {
@@ -62,6 +66,9 @@ public class JsonUtil {
       * @param elementClasses 元素类型
       */
      public static <T> T fromJson(String jsonStr, Class<?> collectionClass, Class<?>... elementClasses) {
+         if (StringUtils.isBlank(jsonStr)){
+             return null;
+         }
         JavaType javaType = mapper.getTypeFactory().constructParametrizedType(collectionClass, collectionClass, elementClasses);
          try {
              return mapper.readValue(jsonStr, javaType);
@@ -78,12 +85,18 @@ public class JsonUtil {
       * @return
       */
     public static <T> T convert(Object o, Class<T> tClass){
-        return mapper.convertValue(o, tClass);
+        if(null != o){
+            return mapper.convertValue(o, tClass);
+        }
+        return null;
     }
 
 
     public static Map<String, Object> toMap(String json) {
-        return fromJson(json, Map.class);
+        if(StringUtils.isNotBlank(json)){
+            return fromJson(json, Map.class);
+        }
+        return null;
     }
 
 }

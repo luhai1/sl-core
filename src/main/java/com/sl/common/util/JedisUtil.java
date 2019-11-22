@@ -1,5 +1,6 @@
 package com.sl.common.util;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.crazycake.shiro.RedisManager;
 
@@ -63,7 +64,11 @@ public class JedisUtil {
         if(StringUtils.isEmpty(key)){
             return null;
         }
-        return new String(redisManager.get(key.getBytes()));
+        byte[] bytes = redisManager.get(key.getBytes());
+        if(null !=bytes && bytes.length >0){
+          return   new String(bytes);
+        }
+        return null;
     }
 
     /**
