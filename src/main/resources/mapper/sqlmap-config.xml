@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sl.dao.SysConfigDao" >
+    <resultMap id="sysConfigMap" type="com.sl.entity.SysConfig">
+        <id column="id" property="id"/>
+        <result column="config_code" property="configCode"/>
+        <result column="config_name" property="configName"/>
+        <result column="config_value" property="configValue"/>
+        <result column="description" property="description"/>
+    </resultMap>
+    <select id="getAllSysConfig" resultMap="sysConfigMap">
+        select
+        sl_sys_config.id,
+        sl_sys_config.config_code,
+        sl_sys_config.config_name,
+        sl_sys_config.config_value,
+        sl_sys_config.description
+        from sl_sys_config
+        where sl_sys_config.status=1
+    </select>
+
+</mapper>

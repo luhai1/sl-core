@@ -80,3 +80,18 @@ create table sl_user_role
   `status` smallint(2) NOT NULL DEFAULT 1 COMMENT '是否有效：1有效，0无效',
   UNIQUE KEY `unique_code` (`role_code`,`user_id`) USING BTREE COMMENT '联合主键'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `sl_sys_config` (
+  `id` int(11) NOT NULL,
+  `config_code` varchar(32) COLLATE utf8mb4_bin NOT NULL COMMENT '配置编码',
+  `config_name` varchar(128) COLLATE utf8mb4_bin NOT NULL COMMENT '配置名称',
+  `config_value` varchar(128) COLLATE utf8mb4_bin NOT NULL COMMENT '配置值',
+  `description` varchar(512) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '配置描述',
+  `status` smallint(1) DEFAULT '1' COMMENT '是否有效：1有效，0无效',
+  `create_time` timestamp NOT NULL COMMENT '创建时间',
+  `update_time` timestamp NOT NULL COMMENT '更新时间',
+  `create_id` int(11) DEFAULT NULL,
+  `update_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `unique_code` (`config_code`) USING BTREE COMMENT 'code唯一'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -171,3 +171,6 @@ INSERT INTO `sl_user_role` VALUES ('base_user', 1, 1);
 INSERT INTO `sl_user_role` VALUES ('sys_admin', 1, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+

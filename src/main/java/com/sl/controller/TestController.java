@@ -1,11 +1,10 @@
 package com.sl.controller;
 
-import com.sl.common.config.dict.DictionaryUtil;
+import com.sl.common.config.sys.DictionaryUtil;
 import com.sl.common.i18n.LocaleMessageSource;
 import com.sl.common.util.JsonUtil;
 import com.sl.service.DictionaryService;
 import com.sl.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

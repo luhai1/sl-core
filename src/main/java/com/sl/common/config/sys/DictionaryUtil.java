@@ -1,4 +1,4 @@
-package com.sl.common.config.dict;
+package com.sl.common.config.sys;
 
 import com.sl.common.util.JedisUtil;
 import com.sl.common.util.JsonUtil;
@@ -22,7 +22,7 @@ public class DictionaryUtil {
     private static final String DICT_REDIS_DICT_SPLIT = ".";
     @Resource
     DictionaryService dictionaryService;
-    public  DictionaryUtil(){}
+
 
     /**
      * 初始化字典放入redis
