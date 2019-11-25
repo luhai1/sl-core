@@ -11,10 +11,6 @@ public class DictionaryItem extends BaseEntity {
      */
     private String  itemCode;
     /**
-     * 字典值名称
-     */
-    private String  itemName;
-    /**
      * 字典值
      */
     private String  itemValue;

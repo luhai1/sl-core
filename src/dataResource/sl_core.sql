@@ -60,7 +60,6 @@ create table sl_sys_dict_item
   `item_code`    varchar(32) NOT NULL COMMENT '字典值编码',
   `parent_item_code`    varchar(32) NOT NULL COMMENT '字典值父级编码',
   `dict_code`    varchar(50) NOT NULL COMMENT '字典编码',
-  `item_name`   varchar(64) NOT NULL COMMENT '字典值名称',
   `item_value`   varchar(64) NOT NULL COMMENT '字典值',
   `description`   varchar(128),
   `status` smallint(2) NOT NULL DEFAULT 1 COMMENT '是否有效：1有效，0无效',
@@ -71,7 +70,7 @@ create table sl_sys_dict_item
   `create_id` int(11) NULL DEFAULT NULL,
   `update_id` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `unique_code`(`item_code`) USING BTREE COMMENT 'code唯一'
+  UNIQUE KEY `unique_code` (`item_code`,`dict_code`) USING BTREE COMMENT '字典code和值code确定唯一'
 )ENGINE = InnoDB AUTO_INCREMENT = 1;
 
 -- ----------------------------

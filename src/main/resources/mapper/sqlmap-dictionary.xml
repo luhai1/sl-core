@@ -9,7 +9,6 @@
         <collection  ofType="com.sl.entity.DictionaryItem" property="dictionaryItemList"  column="{dictCode=dict_code}" select="getDictItemByDictCode">
             <id property="id" column="itemId"/>
             <result property="itemCode" column="item_code"/>
-            <result property="itemName" column="item_name"/>
             <result property="itemValue" column="item_value"/>
             <result property="parentItemCode" column="parent_item_code"/>
             <result property="description" column="description"/>
@@ -22,7 +21,6 @@
     <resultMap id="dictItemMap" type="com.sl.entity.DictionaryItem">
         <id property="id" column="itemId"/>
         <result property="itemCode" column="item_code"/>
-        <result property="itemName" column="item_name"/>
         <result property="itemValue" column="item_value"/>
         <result property="parentItemCode" column="parent_item_code"/>
         <result property="description" column="description"/>
@@ -46,7 +44,6 @@
     select
      sl_sys_dict_item.id,
      sl_sys_dict_item.item_code,
-     sl_sys_dict_item.item_name,
      sl_sys_dict_item.item_value,
      sl_sys_dict_item.parent_item_code,
      sl_sys_dict_item.description,
@@ -61,7 +58,6 @@
     select
      sl_sys_dict_item.id,
      sl_sys_dict_item.item_code,
-     sl_sys_dict_item.item_name,
      sl_sys_dict_item.item_value,
      sl_sys_dict_item.parent_item_code,
      sl_sys_dict_item.description,
