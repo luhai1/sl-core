@@ -15,7 +15,20 @@ public class ResultData {
     }
     public  ResultData(String resultCode,String resultMesg,Object data){
         this.resultCode = resultCode;
-        this.resultMeg =resultMesg;
+        this.resultMeg = resultMesg;
         this.data = data;
+    }
+
+    public ResultData(ResultType resultType){
+        this.resultCode = resultType.getResultCode();
+        this.resultMeg =resultType.getMessage();
+    }
+
+    public static ResultData success(){
+        return new ResultData(ResultType.SUCCESS);
+    }
+
+    public static ResultData fail(){
+        return new ResultData(ResultType.SYS_EXCEPTION);
     }
 }
