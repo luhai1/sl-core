@@ -7,6 +7,10 @@ import java.util.List;
 @Data
 public class LoginUser extends BaseEntity {
     /**
+     * 登录生成token
+     */
+    private String token;
+    /**
      * 用户名
      */
     private String userName;

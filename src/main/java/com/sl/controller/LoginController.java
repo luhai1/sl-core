@@ -2,10 +2,12 @@ package com.sl.controller;
 
 import com.sl.common.config.shiro.UserNamePasswordTimeToken;
 import com.sl.common.out.ResultData;
+import com.sl.common.out.ResultType;
 import com.sl.common.util.JedisUtil;
 import com.sl.common.util.JsonUtil;
 import com.sl.common.util.TokenTools;
 import com.sl.entity.LoginUser;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,15 @@ public class LoginController {
 
         }
         String value = JedisUtil.get(tokenKey);
-        ResultData resultData = new ResultData("00001","success",JsonUtil.fromJson(value, LoginUser.class));
+        ResultData resultData = new ResultData(ResultType.SUCCESS.getResultCode(),ResultType.SUCCESS.getMessage(),JsonUtil.fromJson(value, LoginUser.class));
         return resultData;
+    }
+
+    @RequestMapping("outLogin")
+    public ResultData outLogin(String token){
+        if(StringUtils.isNotBlank(token)){
+            JedisUtil.deleteKey(token);
+        }
+        return new ResultData(ResultType.SUCCESS);
     }
 }

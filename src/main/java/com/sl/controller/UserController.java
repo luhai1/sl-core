@@ -1,5 +1,7 @@
 package com.sl.controller;
 
+import com.sl.common.out.ResultData;
+import com.sl.entity.LoginUser;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class UserController {
     @RequestMapping("/addUser")
-    public String addUser(HttpServletRequest request){
-        return "add success";
+    public ResultData addUser(LoginUser user){
+
+
     }
+
+
 }

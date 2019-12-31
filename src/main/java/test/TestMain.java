@@ -13,6 +13,6 @@ public class TestMain {
         System.out.println(registTime.indexOf("-"));
         System.out.println(registTime.length()-1);
         String m = registTime.substring(registTime.indexOf("-")+1);
-        System.out.println(m);
+        System.out.println(System.lineSeparator());
     }
 }
