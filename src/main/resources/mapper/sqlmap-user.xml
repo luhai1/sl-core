@@ -78,4 +78,34 @@
        and u.user_name = #{userName}
 
     </select>
+
+    <insert id="addUser" parameterType="com.sl.entity.LoginUser">
+        insert into sl_sys_user(
+            user_name,
+            password,
+            real_name,
+            id_card,
+            sex,
+            mobile_phone,
+            email,
+            create_time,
+            update_time,
+            create_id,
+            update_id
+        )
+         values
+        (
+            userName,
+            password,
+            realName,
+            idCard,
+            sex,
+            mobilePhone,
+            email,
+            now(),
+            now(),
+            createId,
+            updateId
+        )
+    </insert>
 </mapper>

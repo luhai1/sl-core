@@ -49,7 +49,7 @@ public class CustomRealm extends AuthorizingRealm {
     }
 
     /**
-     * 这里可以注入userService,为了方便演示，我就写死了帐号了密码
+     * 这里可以注入userService
      * private UserService userService;
      * <p>
      * 获取即将需要认证的信息

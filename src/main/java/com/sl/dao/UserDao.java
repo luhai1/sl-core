@@ -5,4 +5,5 @@ import com.sl.entity.LoginUser;
 public interface UserDao {
     LoginUser getUserByUserName(String userName);
     LoginUser getRoleResourcesByUserName(String userName);
+    void addUser(LoginUser user);
 }
