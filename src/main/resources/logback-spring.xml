@@ -2,7 +2,7 @@
 
 <configuration  scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>SLCore</contextName>
-    <property name="logback.logdir" value="E:\\data\\logs\\core"/>
+    <property name="logback.logdir" value="D:\\data\\logs\\core"/>
     <!--springboot配置文件中获取日志级别-->
     <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
 

@@ -1,4 +1,4 @@
-package com.sl.common.config.dataSource;
+package com.sl.common.dataSource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -16,19 +16,10 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.sl.dao.db", sqlSessionTemplateRef = "db1SqlSessionTemplate")
 public class DataSourceConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.db")
-    @Primary
-    public DataSource db1DataSource() {
-         return new DruidDataSource();
-    }
-
-    @Bean
-    @Primary
-    public SqlSessionFactory db1SqlSessionFactory(@Qualifier("db1DataSource") DataSource dataSource) throws Exception {
+    public SqlSessionFactory dbSqlSessionFactory( DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml"));
@@ -36,14 +27,12 @@ public class DataSourceConfig {
     }
 
     @Bean
-    @Primary
-    public DataSourceTransactionManager db1TransactionManager(@Qualifier("db1DataSource") DataSource dataSource) {
+    public DataSourceTransactionManager dbTransactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean
-    @Primary
-    public SqlSessionTemplate db1SqlSessionTemplate(@Qualifier("db1SqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+    public SqlSessionTemplate db1SqlSessionTemplate(SqlSessionFactory sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

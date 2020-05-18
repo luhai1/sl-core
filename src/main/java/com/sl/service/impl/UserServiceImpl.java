@@ -14,12 +14,18 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @Service
 public class UserServiceImpl implements UserService, UserConstant {
     @Resource
     UserDao userDao;
+
+    @Override
+    public List<LoginUser> selectAll() {
+        return userDao.selectAll();
+    }
 
     /**
      * 根据用户名获取用户信息

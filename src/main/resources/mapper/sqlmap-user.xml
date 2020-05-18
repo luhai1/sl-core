@@ -108,4 +108,19 @@
             updateId
         )
     </insert>
+
+    <select id="selectAll" resultMap="userMap">
+    select
+       u.id,
+       u.user_name,
+       u.real_name,
+       u.password,
+       u.id_card,
+       u.sex,
+       u.mobile_phone,
+       u.email
+       from sl_sys_user u
+       where    u.status = 1
+
+    </select>
 </mapper>
