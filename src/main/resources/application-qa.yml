@@ -1,4 +1,4 @@
-#¶àÊı¾İÔ´
+#å¤šæ•°æ®æº
 com:
   sl:
     datasource:
@@ -19,7 +19,7 @@ com:
           password: Sl123qwe!
 
 
-#ÈÕÖ¾
+#æ—¥å¿—
 logging:
   config: classpath:logback-spring.xml
   level:
@@ -27,7 +27,7 @@ logging:
       sl:
         dao: debug
     root: info
-#¶Ë¿ÚºÅ
+#ç«¯å£å·
 server:
   port: 1106
 #shiro
@@ -35,13 +35,16 @@ shiro:
   redis:
     expire: 1800
     timeout: 0
-#¹ú¼Ê»¯
+#å›½é™…åŒ–
 spring:
   messages:
     basename: i18n/message
-#redis
+  #redis
   redis:
     database: 6
     host: 127.0.0.1
     password: ''
     port: 6379
+
+user:
+  name: ttttt

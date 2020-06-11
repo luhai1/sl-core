@@ -9,10 +9,13 @@ import com.sl.common.out.ResultData;
 import com.sl.common.out.ResultType;
 import com.sl.common.util.JsonUtil;
 import com.sl.entity.LoginUser;
+import com.sl.feign.TestFeign;
 import com.sl.service.DictionaryService;
 import com.sl.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +24,7 @@ import java.io.FileOutputStream;
 import java.util.List;
 
 @RestController
+@RefreshScope
 @RequestMapping("/pub/test")
 public class TestController {
 
@@ -30,7 +34,11 @@ public class TestController {
     DictionaryService dictionaryService;
     @Autowired
     ExcelService excelService;
+    @Resource
+    TestFeign testFeign;
 
+    @Value("${user.name}")
+    String userName;
     @RequestMapping("getI18n")
     public String getI18n(){
         String value = LocaleMessageSource.getMessage("slcore.add.success");
@@ -67,5 +75,16 @@ public class TestController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping("testNacosConfig")
+    public String testNacosConfig() {
+        return userName;
+    }
+
+
+    @RequestMapping("testNacosFeign")
+    public String testNacosFeign() {
+        return testFeign.testFeign();
     }
 }
