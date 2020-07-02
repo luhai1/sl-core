@@ -1,5 +1,9 @@
 package com.sl.controller;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Image;
@@ -11,6 +15,7 @@ import com.sl.common.i18n.LocaleMessageSource;
 import com.sl.common.out.ResultData;
 import com.sl.common.out.ResultType;
 import com.sl.common.pdf.*;
+import com.sl.common.qrCode.QrCodeUtil;
 import com.sl.common.util.JsonUtil;
 import com.sl.entity.LoginUser;
 import com.sl.feign.TestFeign;
@@ -103,6 +108,19 @@ public class TestController {
         PdfData pdfData = getPdfData();
         PdfUtil.generateToPdf(pdfData,response);
     }
+
+    @RequestMapping("testQrcode")
+    public void testQrcode( HttpServletResponse response) {
+        Map<EncodeHintType, String> hints = new HashMap();
+        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+        try{
+            QrCodeUtil.createQrCode("http://www.baidu.com",400,400,"JPG",response.getOutputStream());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 
     private PdfData getPdfData(){
         PdfData pdfData = new PdfData();
