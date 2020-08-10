@@ -11,7 +11,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
 import com.sl.common.i18n.LocaleMessageSource;
-import com.sl.constant.NUmberConstant;
+import com.sl.constant.NumberConstant;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -367,17 +367,17 @@ public class PdfUtil {
          image.setAbsolutePosition(waterImage.getAbsoluteX(),waterImage.getAbsoluteY());
 
          /* 设置图片的大小*/
-         if(NUmberConstant.NUMBER_ZERO.floatValue() != waterImage.getScaleAbsoluteWidth() && 0 != waterImage.getScaleAbsoluteHeight()){
+         if(NumberConstant.NUMBER_ZERO.floatValue() != waterImage.getScaleAbsoluteWidth() && 0 != waterImage.getScaleAbsoluteHeight()){
              image.scaleAbsolute(waterImage.getScaleAbsoluteWidth(), waterImage.getScaleAbsoluteHeight()); // 设置宽高
-         }else if(NUmberConstant.NUMBER_100.floatValue()  != waterImage.getScalePercent()){
+         }else if(NumberConstant.NUMBER_100.floatValue()  != waterImage.getScalePercent()){
              image.scalePercent(waterImage.getScalePercent()); // 设置等比例放缩
          }
          // 设置旋转弧度
-         if(NUmberConstant.NUMBER_ZERO.floatValue() != waterImage.getRotation()){
+         if(NumberConstant.NUMBER_ZERO.floatValue() != waterImage.getRotation()){
              image.setRotation(waterImage.getRotation());
          }
          // 设置旋转角度
-         if(NUmberConstant.NUMBER_ZERO.floatValue() != waterImage.getRotationDegrees()){
+         if(NumberConstant.NUMBER_ZERO.floatValue() != waterImage.getRotationDegrees()){
              image.setRotationDegrees(waterImage.getRotationDegrees());
          }
          pdfContentByte.setGState(pdfGState);

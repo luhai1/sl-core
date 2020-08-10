@@ -95,19 +95,47 @@
         )
          values
         (
-            userName,
-            password,
-            realName,
-            idCard,
-            sex,
-            mobilePhone,
-            email,
+             #{userName},
+             #{password},
+             #{realName},
+             #{idCard},
+             #{sex},
+             #{mobilePhone},
+             #{email},
             now(),
             now(),
-            createId,
-            updateId
+             #{createId},
+            #{updateId}
         )
     </insert>
+    <update id="updateUser" parameterType="com.sl.entity.LoginUser">
+        update sl_sys_user
+        <set>
+            update_id =#{updateId},update_time=now()
+            <if test="password!=null and password!='' ">
+                , UPDATOR = #{updator}
+            </if>
+            <if test="realName!=null and realName!='' ">
+                ,real_name = #{realName}
+            </if>
+            <if test="id_card!=null and id_card!='' ">
+                ,idCard = #{idCard}
+            </if>
+            <if test="sex!=null and sex!='' ">
+                ,sex = #{sex}
+            </if>
+            <if test="mobilePhone!=null and mobilePhone!='' ">
+                ,mobile_phone = #{mobilePhone}
+            </if>
+            <if test="email!=null and email!='' ">
+                ,email = #{email}
+            </if>
+        </set>
+
+    </update>
+    <update id="deleteUserByUserName" parameterType="java.lang.String" >
+        update sl_sys_user set status=0 where  u.user_name = #{userName}
+    </update>
 
     <select id="selectAll" resultMap="userMap">
     select

@@ -8,5 +8,7 @@ public interface UserDao {
     List<LoginUser> selectAll();
     LoginUser getUserByUserName(String userName);
     LoginUser getRoleResourcesByUserName(String userName);
-    void addUser(LoginUser user);
+    Integer addUser(LoginUser user);
+    Integer updateUser(LoginUser user);
+    Integer deleteUserByUserName(String userName);
 }

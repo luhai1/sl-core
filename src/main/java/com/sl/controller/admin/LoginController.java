@@ -1,4 +1,4 @@
-package com.sl.controller;
+package com.sl.controller.admin;
 
 import com.sl.common.config.shiro.UserNamePasswordTimeToken;
 import com.sl.common.out.ResultData;
