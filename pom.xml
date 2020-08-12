@@ -230,6 +230,15 @@
             <version>3.3.0</version>
         </dependency>
 
+        <!-- 引入本地jar -->
+        <dependency>
+            <groupId>com.topsoft</groupId>
+            <artifactId>cms-pak</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/aspose-words-15.8.0-jdk16.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
 
@@ -242,6 +251,13 @@
                     <!-- 没有该配置，devtools 不生效 -->
                     <fork>true</fork>
                     <mainClass>com.sl.SLApplicationStart</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
                 </configuration>
             </plugin>
 

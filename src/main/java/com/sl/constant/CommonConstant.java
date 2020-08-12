@@ -10,4 +10,9 @@ public interface CommonConstant {
     Integer OPERATE_ADD = 0 ;
     Integer OPERATE_UPDATE = 1 ;
     Integer OPERATE_DELETE = 2 ;
+    /**
+     * 文件类型
+     */
+    String FILE_TYPE_DOC = "doc";
+    String FILE_TYPE_DOCX= "docx";
 }

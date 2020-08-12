@@ -10,6 +10,9 @@ import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
+import com.itextpdf.text.pdf.parser.ContentByteUtils;
+import com.itextpdf.text.pdf.parser.PdfContentStreamProcessor;
+import com.itextpdf.text.pdf.parser.RenderListener;
 import com.sl.common.i18n.LocaleMessageSource;
 import com.sl.constant.NumberConstant;
 import freemarker.cache.ClassTemplateLoader;
@@ -27,6 +30,8 @@ import java.net.URLEncoder;
 import java.util.*;
 
 public class PdfUtil {
+
+
     /**
      * 生成pdf文件
      * @param pdfData pdf数据
@@ -453,4 +458,40 @@ public class PdfUtil {
          }
          return out.toByteArray();
      }
+
+    /**
+     * 去除pdf中水印
+     */
+
+    public static void removePdfWaterMarked(String watermarkedFile) throws IOException, DocumentException {
+
+    }
+
+    public static void main(String[] aargs) throws Exception {
+        removeWatermark("D:\\test.pdf","D:\\1.pdf");
+    }
+    public static void removeWatermark(String srcPath, String buildPath) throws Exception {
+        PdfReader reader = new PdfReader( IOUtils.toByteArray(new FileInputStream(new File(srcPath))));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PdfStamper stamp  = new PdfStamper(reader, out);
+        System.out.println(reader.getNumberOfPages());
+        for(int i = 1; i <= reader.getNumberOfPages(); i++){
+            PdfContentByte pdfContentByte = stamp.getUnderContent(i);
+            if(null != pdfContentByte){
+                // 设置水印
+                Image image =  Image.getInstance(IOUtils.toByteArray(new ClassPathResource("/templates/ftl/115121.jpg").getInputStream()));
+                image.setAbsolutePosition(250,250);
+                pdfContentByte.addImage(image);
+            }
+
+        }
+        stamp.close();
+        reader.close();
+        OutputStream outputStream = new FileOutputStream(new File(buildPath)) ;
+        outputStream.write(out.toByteArray());
+        outputStream.flush();
+        outputStream.close();
+    }
+
+
 }

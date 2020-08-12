@@ -149,7 +149,7 @@ public class TestController {
         Map<String,Object> data = new HashMap();
 
         List<Map<String,Object>> unitPayPlanList = new ArrayList();
-        for(int i = 0;i<20;i++){
+        for(int i = 0;i<3;i++){
             Map<String,Object> obj = new HashMap();
             obj.put("insuredType","职工"+i);
             obj.put("payState","已支付");
@@ -170,6 +170,8 @@ public class TestController {
         pdfFtlData.setTemplateData(tmpData);
         pdfFtlData.setNeedWaterImage(true);
         pdfFtlData.setWaterImage(waterImage);
+        pdfFtlData.setNeedWaterMark(true);
+        pdfFtlData.setWaterMark(waterMark);
         pdfFtlDataList.add(pdfFtlData);
         PdfFtlData pdfFtlData1 = new PdfFtlData();
         pdfFtlData1.setTemplateFileName("test.ftl");
@@ -181,10 +183,10 @@ public class TestController {
         pdfFtlData1.setTemplateData(tmpData1);
         pdfFtlData1.setNeedWaterMark(true);
         pdfFtlData1.setWaterMark(waterMark);
-        pdfFtlDataList.add(pdfFtlData1);
-        pdfFtlDataList.add(pdfFtlData);
-        pdfFtlDataList.add(pdfFtlData1);
-        pdfFtlDataList.add(pdfFtlData);
+      //  pdfFtlDataList.add(pdfFtlData1);
+       // pdfFtlDataList.add(pdfFtlData);
+       // pdfFtlDataList.add(pdfFtlData1);
+       // pdfFtlDataList.add(pdfFtlData);
         pdfData.setPdfFtlDataList(pdfFtlDataList);
 
         PdfHeader pdfHeader = new PdfHeader();
@@ -212,7 +214,7 @@ public class TestController {
             e.printStackTrace();
         }
 
-        pdfData.setNeedCatalog(true);
+       // pdfData.setNeedCatalog(true);
         PdfCatalog pdfCatalog = new PdfCatalog();
         Map<String, Integer> catalogs = new HashMap<>();
         catalogs.put("表格1",1);
@@ -220,8 +222,8 @@ public class TestController {
         catalogs.put("表格2",5);
         catalogs.put("test2",8);
         catalogs.put("表格3",9);
-        pdfCatalog.setCatalogs(catalogs);
-        pdfData.setPdfCatalog(pdfCatalog);
+      //  pdfCatalog.setCatalogs(catalogs);
+       // pdfData.setPdfCatalog(pdfCatalog);
         return pdfData;
     }
 }

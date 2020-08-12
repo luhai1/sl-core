@@ -2,9 +2,7 @@ package com.sl.common.exception;
 
 import com.sl.common.i18n.LocaleMessageSource;
 import com.sl.common.out.ResultData;
-import com.sl.common.out.ResultType;
 import com.sl.common.util.JsonUtil;
-import com.sun.java.browser.plugin2.liveconnect.v1.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
