@@ -5,7 +5,7 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: 127.0.0.1:8848 #配置中心地址
+        server-addr: 139.196.126.165:8848 #配置中心地址
         prefix: slcode
         file-extension: yaml
         namespace: 38088c78-7a8d-4ed3-95d7-d951afcb29f8
@@ -13,8 +13,8 @@ spring:
         username: nacos
         refresh-enabled: true
       discovery:
-        ip: 127.0.0.1
-        server-addr: 127.0.0.1:8848 #注册中心地址
+        ip: 139.196.126.165
+        server-addr: 139.196.126.165:8848 #注册中心地址
         namespace: 38088c78-7a8d-4ed3-95d7-d951afcb29f8
         password: nacos
         username: nacos

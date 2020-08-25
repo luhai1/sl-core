@@ -1,14 +1,13 @@
 package com.sl.common.util;
 
 import com.aspose.words.*;
+import com.sl.common.i18n.LocaleMessageSource;
 import com.sl.constant.CommonErrorConstant;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 @Slf4j
 public class WordToPdfUtils {
@@ -25,13 +24,13 @@ public class WordToPdfUtils {
     public static void doc2pdf(String inPath, String outPath) {
         File wordFile = new File(inPath);
         if (!wordFile.exists()) {
-            log.error(CommonErrorConstant.FILE_NOT_EXIT, inPath);
-            throw new RuntimeException(CommonErrorConstant.FILE_NOT_EXIT);
+            log.error(LocaleMessageSource.getMessage(CommonErrorConstant.FILE_NOT_EXIT), inPath);
+            throw new RuntimeException(LocaleMessageSource.getMessage(CommonErrorConstant.FILE_NOT_EXIT));
         }
 
         // 验证License 若不验证则转化出的pdf文档会有水印产生
         if (!getLicense()) {
-            throw new RuntimeException(CommonErrorConstant.LISTEN_FILE_NOT_EXIT);
+            throw new RuntimeException(LocaleMessageSource.getMessage(CommonErrorConstant.LISTEN_FILE_NOT_EXIT));
         }
         try {
             //获取文件
@@ -57,8 +56,8 @@ public class WordToPdfUtils {
     public static void doc2pdf(String inPath, OutputStream outputStream) {
         File wordFile = new File(inPath);
         if (!wordFile.exists()) {
-            log.error(CommonErrorConstant.FILE_NOT_EXIT, inPath);
-            throw new RuntimeException(CommonErrorConstant.FILE_NOT_EXIT);
+            log.error(LocaleMessageSource.getMessage(CommonErrorConstant.FILE_NOT_EXIT), inPath);
+            throw new RuntimeException(LocaleMessageSource.getMessage(CommonErrorConstant.FILE_NOT_EXIT));
         }
 
         // 验证License 若不验证则转化出的pdf文档会有水印产生
@@ -83,23 +82,32 @@ public class WordToPdfUtils {
      * @param outputStream 输出文件流
      */
     public static void doc2pdf(InputStream inputStream, OutputStream outputStream) {
-        if (null == inputStream) {
-            log.error(CommonErrorConstant.FILE_NOT_EXIT);
-            throw new RuntimeException(CommonErrorConstant.FILE_NOT_EXIT);
-        }
-
-        // 验证License 若不验证则转化出的pdf文档会有水印产生
-        if (!getLicense()) {
-            throw new RuntimeException(CommonErrorConstant.LISTEN_FILE_NOT_EXIT);
-        }
         try {
+            if (null == inputStream) {
+                log.error(LocaleMessageSource.getMessage(CommonErrorConstant.FILE_NOT_EXIT));
+                throw new RuntimeException(LocaleMessageSource.getMessage(CommonErrorConstant.FILE_NOT_EXIT));
+            }
+            // 验证License 若不验证则转化出的pdf文档会有水印产生
+            if (!getLicense()) {
+                throw new RuntimeException(LocaleMessageSource.getMessage(CommonErrorConstant.LISTEN_FILE_NOT_EXIT));
+            }
+            FontSettings.setFontsFolder("/usr/share/fonts" + File.separator, true);
             // Address是将要被转化的word文档
             Document doc = new Document(inputStream);
             // 全面支持DOC, DOCX, OOXML, RTF HTML, OpenDocument, PDF
             completeTableBorder(doc);
             doc.save(outputStream, SaveFormat.PDF);
         } catch (Exception e) {
+            log.error(e.getMessage(),e);
             e.printStackTrace();
+        }finally {
+            if(inputStream != null){
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -140,7 +148,7 @@ public class WordToPdfUtils {
     private static boolean getLicense() {
         boolean result = false;
         try {
-            InputStream is = WordToPdfUtils.class.getClassLoader().getResourceAsStream("aspose\\license.xml");
+            InputStream is = new ClassPathResource("aspose/license.xml").getInputStream();
             License aposeLic = new License();
             aposeLic.setLicense(is);
             result = true;
