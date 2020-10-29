@@ -18,6 +18,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <!--自定义依赖版本-->
+        <elasticsearch.version>7.9.2</elasticsearch.version>
     </properties>
 
 
@@ -237,6 +239,12 @@
             <version>15.8.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/lib/aspose-words-15.8.0-jdk16.jar</systemPath>
+        </dependency>
+
+        <!-- 集成elasticsearch-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
 
     </dependencies>

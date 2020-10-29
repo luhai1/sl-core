@@ -297,7 +297,7 @@ public class PdfUtil {
                     phrase.add(new Chunk(pdfHeader.getImage(), pdfHeader.getImageX(), pdfHeader.getImageY()));
                 }
 
-                // 1、写入左侧页眉 todo 听过入参设置左右上下间距
+                // 1、写入左侧页眉
                 ColumnText.showTextAligned(pdfContentByte,
                         pdfHeader.getAlignment(), phrase,
                         document.right(pdfHeader.getRightSpace()), document.top(pdfHeader.getTopSpace()), pdfHeader.getRotation());
